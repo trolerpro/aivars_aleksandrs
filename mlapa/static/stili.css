@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #bfecac;
+}
+.poga{
+    margin-left:5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(240, 227, 211);
+    text-decoration: none;
+    padding: 5px;
+    
+    
+}
+.bilde{
+    margin-left:45%;
+    margin-top:5%;
+
+    border: 5px solid black;
+    border-radius: 10px;
+}
+.anketa{
+    margin-left:10%;
+    margin-top:10%;
+
+
+}
+input{
+    
+    margin-bottom:10px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: auto;
+}
+
+button{
+    border: 1px solid black;
+    border-radius: 5px;
+
+
+}

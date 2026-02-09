@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <title>veidlapa</title>
+
+
+ 
+{% if name and email %}
+    <p style="margin-left: 10%">Paldies, {{ name }} tavs e-pasts {{ email }} ir iesniegts</p>
+{% endif %}
+{% endblock %}
