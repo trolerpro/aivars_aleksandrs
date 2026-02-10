@@ -2,10 +2,12 @@
 
 {% block body %}
     <title>videjas atzimes</title>
+<form class="atkape">
     <h1>Videjas atzimes</h1>
-
-<input></input>
-
- 
-
+<input name="pr" value="{{name}}" placeholder="ieraksti priekšmetu" type="text"></input>
+<input name="at" placeholder="ieraksti  atzīmi" type="number" min="0"></input>
+<button type="submit">iesniegt</button>
+<button>aprēķināt</button>
+<button>notīrīt visu</button>
+</form>
 {% endblock %}

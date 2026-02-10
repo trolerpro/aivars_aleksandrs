@@ -4,11 +4,13 @@
     <title>atzimes</title>
     
 
-<form class="anketa">
+<form class="atkape">
     <label>Ievadi cik tu varētu dabūt pārbaudes darbā punktus:</label>
-    <input name="ir" placeholder="Cik dabuji" type="number">
+    <input id="ir" placeholder="Cik dabuji" type="number" min="0" required>
     <label>no</label>
-    <input name="max" placeholder="Maksimālie" type="number">
+    <input id="max" placeholder="Maksimālie" type="number" min=" 0" required>
+    <button type="calculate">aprēķināt</button>
+
 
 </form>
 <form class="anketa">
@@ -22,6 +24,6 @@
 <p class="atzimes">31% 4</p>
 <p class="atzimes">21% 3</p>
 <p class="atzimes">11% 2</p>
-<p class="atzimes1">0% 1</p>
+<p class="atzimes1">0% 1 </p>
 </form>
 {% endblock %}
