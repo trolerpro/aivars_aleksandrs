@@ -6,7 +6,7 @@ body {
     margin-left:5px;
     border: 1px solid black;
     border-radius: 5px;
-    background-color: rgb(240, 227, 211);
+    background-color: #f7eedb;
     text-decoration: none;
     padding: 5px;
     
@@ -19,7 +19,7 @@ body {
     border: 5px solid black;
     border-radius: 10px;
 }
-.anketa{
+.atkape{
     margin-left:10%;
     margin-top:10%;
 
