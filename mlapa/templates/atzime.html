@@ -4,16 +4,22 @@
     <title>atzimes</title>
     
 
-<form class="atkape">
+<form class="atkape" method="post" action="/calculate">
     <label>Ievadi cik tu varētu dabūt pārbaudes darbā punktus:</label>
-    <input id="ir" placeholder="Cik dabuji" type="number" min="0" required>
+    <input id="ir" name="ir" placeholder="Cik dabuji" type="number" min="0" required>
     <label>no</label>
-    <input id="max" placeholder="Maksimālie" type="number" min=" 0" required>
-    <button type="calculate">aprēķināt</button>
-
-
+    <input id="max" name="max" placeholder="Maksimālie" type="number" min="0" required>
+    <button type="submit">aprēķināt</button>
+    <label>
+    {% if procenti is defined %}
+    {% set p = procenti|round() %}
+        {% set p = procenti|round(0)|int %}
+    <p class="rezultats" >{{ p }}% {{ d_fmt }} Atzīme: {{ atzime }}</p>
+    {% endif %}
+    </label>
 </form>
 <form class="anketa">
+
 <label style="font-weight: bold;">Procenti, no</label><label style="margin-left:45px; font-weight: bold;">atzīme</label>
 <p class="atzimes">96% 10</p>
 <p class="atzimes">87% 9</p>

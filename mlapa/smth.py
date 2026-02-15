@@ -31,16 +31,41 @@ def submit():
 @app.route('/calculate', methods=['POST'])
 def calculate():
     if request.method == 'POST':
-        ir = request.form['ir']
-        max = request.form['max']
+        ir = request.form.get('ir')
+        max = request.form.get('max')
         if ir and max:
-            ir = float(ir)
-            max = float(max)
-            if max != 0:
-                procenti = (ir / max) * 100
-                return render_template('atzime.html', procenti=procenti)
+            try:
+                ir = float(ir)
+                max = float(max)
+            except ValueError:
+                return "Ievades nav derīgi skaitļi."
+            if ir != 0:
+                dalijums = ir / max
+                procenti = dalijums * 100
+                p = procenti
+                if p >= 96:
+                    atzime = 10
+                elif p >= 87:
+                    atzime = 9
+                elif p >= 76:
+                    atzime = 8
+                elif p >= 67:
+                    atzime = 7
+                elif p >= 56:
+                    atzime = 6
+                elif p >= 41:
+                    atzime = 5
+                elif p >= 31:
+                    atzime = 4
+                elif p >= 21:
+                    atzime = 3
+                elif p >= 11:
+                    atzime = 2
+                else:
+                    atzime = 1
+                return render_template('atzime.html', procenti=procenti, dalijums=dalijums, atzime=atzime)
             else:
-                return "Maksimālie nevar būt nulle."
+                return "Dalīšana nevar notikt ar nulli (ir)."
 
 
 
