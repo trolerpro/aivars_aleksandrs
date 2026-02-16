@@ -22,11 +22,28 @@ def submit():
        prieksmets = request.form['pr']
        if prieksmets :
             conn = sqlite3.connect('c:/Users/AT2312/Desktop/program/4tema/mlapa/database.db')
-            conn.execute( "INSERT INTO preiksmeti (prieksmets) VALUES (?)", (prieksmets,) )
+            conn.execute( "INSERT INTO preiksmeti (prieksmets) VALUES (?)", (prieksmets) )
             conn.commit()
             conn.close()
 
+@app.route('/submit_videjas', methods=['POST'])
+def submit_videjas():
+    if request.method == 'POST':
+        prieksmets = request.form['pr']
+        if prieksmets:
+            conn = sqlite3.connect('c:/Users/AT2312/Desktop/program/4tema/mlapa/database.db')
+            conn.execute("INSERT INTO videjas (prieksmets) VALUES (?)", (prieksmets,))
+            conn.commit()
+            conn.close()
+    return render_template("videjas.html")
 
+@app.route('/dzest')
+def dzest():
+    conn = sqlite3.connect('c:/Users/AT2312/Desktop/program/4tema/mlapa/database.db')
+    conn.execute( "DELETE FROM preiksmeti")
+    conn.commit()
+    conn.close()
+    return render_template("videjas.html")
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
@@ -67,11 +84,5 @@ def calculate():
             else:
                 return "Dalīšana nevar notikt ar nulli (ir)."
 
-
-
-
-
-
-
 if __name__ == '__main__':  
-   app.run(debug=True)  
+   app.run(debug=True)

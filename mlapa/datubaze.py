@@ -6,9 +6,10 @@ def create_database():
     conn.execute(""" CREATE TABLE IF NOT EXISTS preiksmeti (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     prieksmets TEXT,
-                    atzime TEXT
+                    atzime TEXT,
                     ); """)
     conn.commit()
     conn.close()
+
 if __name__ == "__main__":
     create_database()
