@@ -1,16 +1,21 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <title>videjas atzimes</title>
-<form class="atkape">
-    <h1>Videjas atzimes</h1>
-<input style="width: 175px;" name="pr" value="{{name}}" placeholder="ieraksti priekšmetu" type="text"></input>
-<input style="width: 175px;" name="at" placeholder="ieraksti  atzīmi" type="number" min="0" max="10"></input>
-<button type="/submit">iesniegt</button>
-<button>aprēķināt</button>
-<button>notīrīt visu</button>
+    <title>Videjas atzimes</title>
+    
+    <form class="atkape" method="post" action="/videjas">
+        <label>Priekšmets:</label>
+        <input name="pr" placeholder="Ieraksti priekšmetu" type="text" required>
+        <label>Atzīme:</label>
+        <input name="at" placeholder="Ieraksti atzīmi (0-10)" type="number" min="0" max="10" required>
+        <button type="submit">Iesniegt</button>
+        <a href="/dzest_videjas" style="display: inline-block; margin-left: 10px;">Notīrīt visu</a>
+    </form>
 
-
-
-</form>
+    <form class="anketa">
+       
+        {% for stat in stats %}
+            <p class="atzimes">{{ stat['prieksmets'] }} <span style="margin-left: 45px;">{{ "%.2f"|format(stat['videjais']) }}</span></p>
+        {% endfor %}
+    </form>
 {% endblock %}

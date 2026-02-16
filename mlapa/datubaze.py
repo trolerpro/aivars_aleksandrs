@@ -13,6 +13,13 @@ def create_database():
                     atzime TEXT
                     ); """)
     
+    conn.execute(""" CREATE TABLE IF NOT EXISTS videjas (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    prieksmets TEXT NOT NULL,
+                    atzime INTEGER NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    ); """)
+    
     conn.execute(""" CREATE TABLE IF NOT EXISTS tasks (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     title TEXT NOT NULL,

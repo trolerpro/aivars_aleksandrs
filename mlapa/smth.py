@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 import sqlite3
 import os
-from datetime import datetime
+
 
 # Use database next to this module so paths work regardless of current working dir
 BASE_DIR = os.path.dirname(__file__)
@@ -12,9 +12,7 @@ DB_PATH = os.path.join(BASE_DIR, 'database.db')
 def sakums():
     return render_template("sakums.html")
  
-@app.route("/videjas")
-def videjas():
-    return render_template("videjas.html")
+
 @app.route("/atzimes")
 def atzimes():
     return render_template("atzime.html")
@@ -32,16 +30,40 @@ def submit():
             conn.commit()
             conn.close()
 
-@app.route('/submit_videjas', methods=['POST'])
-def submit_videjas():
+@app.route('/videjas', methods=['GET', 'POST'])
+def videjas():
     if request.method == 'POST':
-        prieksmets = request.form['pr']
-        if prieksmets:
-            conn = sqlite3.connect(DB_PATH)
-            conn.execute("INSERT INTO videjas (prieksmets) VALUES (?)", (prieksmets,))
-            conn.commit()
-            conn.close()
-    return render_template("videjas.html")
+        prieksmets = request.form.get('pr')
+        atzime = request.form.get('at')
+        if prieksmets and atzime:
+            try:
+                atzime = int(atzime)
+                if 0 <= atzime <= 10:
+                    conn = sqlite3.connect(DB_PATH)
+                    conn.execute("INSERT INTO videjas (prieksmets, atzime) VALUES (?, ?)", (prieksmets, atzime))
+                    conn.commit()
+                    conn.close()
+            except ValueError:
+                pass
+    
+    # Get all marks grouped by subject with averages and counts
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT 
+            prieksmets,
+            COUNT(*) as skaits,
+            AVG(atzime) as videjais,
+            GROUP_CONCAT(atzime, ', ') as atzimes
+        FROM videjas
+        GROUP BY prieksmets
+        ORDER BY prieksmets
+    """)
+    stats = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    
+    return render_template("videjas.html", stats=stats)
 
 @app.route('/dzest')
 def dzest():
@@ -50,6 +72,14 @@ def dzest():
     conn.commit()
     conn.close()
     return render_template("videjas.html")
+
+@app.route('/dzest_videjas')
+def dzest_videjas():
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("DELETE FROM videjas")
+    conn.commit()
+    conn.close()
+    return render_template("videjas.html", stats=[])
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
