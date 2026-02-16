@@ -48,3 +48,57 @@ button{
     word-spacing: 108px;
 
 }
+
+/* Minimal notepad styles (simple, accessible) */
+.notepad-container{
+    max-width:640px;
+    margin:24px auto;
+    padding:12px;
+    background:#bfecac;
+    border-radius:6px;
+}
+h1{
+    font-size:20px;
+    text-align:left;
+    margin:0 0 12px;
+    color:#222;
+}
+.add-task-section{
+    display:flex;
+    gap:8px;
+    margin-bottom:12px;
+    border-radius:4px;
+}
+.add-task-section input{
+    flex:1;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:4px;
+    font-size:15px;
+}
+.add-task-section button{
+    padding:6px 14px;
+}
+.task-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+.task-item{
+    align-items:center;
+    gap:10px;
+    padding:10px;
+    background:#f7f7f7;
+    border-left:4px solid #ca0e01;
+}
+.task-item.done{
+    border-left-color:#008a22;
+}
+
+.btn-delete{
+    background:#ff6b6b;
+    color:#fff;
+    padding:6px 8px;
+    border-radius:4px;
+    text-align:center;
+}

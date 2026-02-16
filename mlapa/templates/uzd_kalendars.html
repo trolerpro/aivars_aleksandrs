@@ -1,7 +1,121 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<div class="notepad-container">
+    <h1>Mani Uzdevumi</h1>
+    
+    <!-- Add Task Section -->
+    <div class="add-task-section">
+        <input type="text" id="taskInput" placeholder="Raksti jaunu uzdevumu..." autofocus>
+        <button onclick="addTask()">Pievienot</button>
+    </div>
 
+    <!-- Task List -->
+    <div id="taskList" class="task-list"></div>
+</div>
 
+<!-- Styles moved to /static/stili.css -->
 
+<script>
+let tasks = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadTasks();
+    document.getElementById('taskInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addTask();
+    });
+});
+
+function loadTasks() {
+    fetch('/api/tasks')
+        .then(r => r.json())
+        .then(data => {
+            tasks = data;
+            renderTasks();
+        });
+}
+
+function renderTasks() {
+    const list = document.getElementById('taskList');
+    
+    if (tasks.length === 0) {
+        list.innerHTML = '<div class="empty-msg">Nav uzdevumu. Raksti pirmo!</div>';
+        return;
+    }
+    
+    list.innerHTML = tasks.map(t => `
+        <div class="task-item ${t.status === 'completed' ? 'done' : ''}">
+            <input type="checkbox" ${t.status === 'completed' ? 'checked' : ''} 
+                   onchange="toggleTask(${t.id})">
+            <div class="task-text" onclick="editTask(${t.id})">${t.title}</div>
+            <button class="btn-delete" onclick="deleteTask(${t.id}, event)">Dzēst</button>
+        </div>
+    `).join('');
+}
+
+function addTask() {
+    const input = document.getElementById('taskInput');
+    const text = input.value.trim();
+    
+    if (!text) {
+        alert('Raksti uzdevumu!');
+        return;
+    }
+    
+    fetch('/api/tasks', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            title: text,
+            due_date: new Date().toISOString().split('T')[0],
+            description: '',
+            priority: 'normal',
+            status: 'pending',
+            progress: 0
+        })
+    }).then(() => {
+        input.value = '';
+        input.focus();
+        loadTasks();
+    });
+}
+
+function editTask(id) {
+    const task = tasks.find(t => t.id === id);
+    const newText = prompt('Rediģē uzdevumu:', task.title);
+    
+    if (newText === null || !newText.trim()) return;
+    
+    fetch(`/api/tasks/${id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            ...task,
+            title: newText.trim()
+        })
+    }).then(() => loadTasks());
+}
+
+function toggleTask(id) {
+    const task = tasks.find(t => t.id === id);
+    const newStatus = task.status === 'completed' ? 'pending' : 'completed';
+    
+    fetch(`/api/tasks/${id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            ...task,
+            status: newStatus
+        })
+    }).then(() => loadTasks());
+}
+
+function deleteTask(id, e) {
+    e.stopPropagation();
+    if (!confirm('Dzēst uzdevumu?')) return;
+    
+    fetch(`/api/tasks/${id}`, {method: 'DELETE'})
+        .then(() => loadTasks());
+}
+</script>
 {% endblock %}
