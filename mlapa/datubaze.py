@@ -3,7 +3,7 @@ import os
 
 def create_database():
 
-    # Put the database file next to this module so path works regardless of CWD
+  
     base = os.path.dirname(__file__)
     db_path = os.path.join(base, 'database.db')
     conn = sqlite3.connect(db_path)
