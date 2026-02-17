@@ -8,7 +8,7 @@
     <label>Ievadi cik tu varētu dabūt pārbaudes darbā punktus:</label>
     <input id="ir" name="ir" placeholder="Cik dabuji" type="number" min="0" required>
     <label>no</label>
-    <input id="max" name="max" placeholder="Maksimālie" type="number" min="0" required>
+    <input id="max" name="max" placeholder="Maksimālie" type="number" min="1" required>
     <button>aprēķināt</button>
     <label>
     {% if procenti is defined %}
@@ -17,6 +17,9 @@
     <p class="rezultats" >{{ p }}% {{ d_fmt }} Atzīme: {{ atzime }}</p>
     {% endif %}
     </label>
+    {% if error is defined %}
+    <p class="error" >{{ error }}</p>
+    {% endif %}
 </form>
 <form class="anketa">
 

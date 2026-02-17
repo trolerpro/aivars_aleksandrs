@@ -109,6 +109,8 @@ def calculate():
                 max = float(max)
             except ValueError:
                 return "Ievades nav derīgi skaitļi."
+            if ir > max:
+                return render_template('atzime.html', error="Ievades kļūda: tu nevari dabūt vairāk punktus nekā darbā ir.")
             if ir != 0:
                 dalijums = ir / max
                 procenti = dalijums * 100
@@ -141,7 +143,10 @@ def calculate():
                     atzime=atzime
                 )
             else:
-                return "Dalīšana nevar notikt ar nulli (ir)."
+                return render_template('atzime.html',atzime=1, procenti=0, dalijums=0)
+
+
+
 
 
 

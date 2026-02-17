@@ -5,9 +5,9 @@
     
     <form class="atkape" method="post" action="/videjas">
         <label>Priekšmets:</label>
-        <input name="pr" placeholder="Ieraksti priekšmetu" type="text" required>
+        <input name="pr" maxlength="40" placeholder="Ieraksti priekšmetu" type="text" required>
         <label>Atzīme:</label>
-        <input name="at" placeholder="Ieraksti atzīmi (0-10)" type="number" min="0" max="10" required>
+        <input name="at" placeholder="Ieraksti atzīmi (0-10)" type="number" min="1" max="10" required>
         <button type="submit">Iesniegt</button>
         <a href="/dzest_videjas" style="display: inline-block; margin-left: 10px;">Notīrīt visu</a>
     </form>
